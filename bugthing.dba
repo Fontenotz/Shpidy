@@ -1,0 +1,124 @@
+sync on
+sync rate 35
+hide mouse
+
+load image "spider.bmp",1
+load image "bugger.bmp",2
+load image "bugger.bmp",3
+load image "bugger.bmp",4
+load image "bugger.bmp",5
+load image "bugger.bmp",6
+
+coll1=0
+coll2=0
+coll3=0
+coll4=0
+coll5=0
+
+spiderxstart=20
+spiderystart=5
+
+bug1xspeed=-4
+bug1yspeed=2
+bug1xstart=100
+bug1ystart=100
+
+bug2xspeed=-4
+bug2yspeed=4
+bug2xstart=200
+bug2ystart=200
+
+bug3xspeed=5
+bug3yspeed=4
+bug3xstart=300
+bug3ystart=300
+
+bug4xspeed=4
+bug4yspeed=5
+bug4xstart=400
+bug4ystart=400
+
+bug5xspeed=1
+bug5yspeed=-5
+bug5xstart=50
+bug5ystart=400
+
+repeat
+sync
+
+sprite 1,spiderxstart,spiderystart,1
+if coll1=0
+sprite 2,bug1xstart,bug1ystart,2
+endif
+if coll2=0
+sprite 3,bug2xstart,bug2ystart,3
+endif
+if coll3=0
+sprite 4,bug3xstart,bug3ystart,4
+endif
+if coll4=0
+sprite 5,bug4xstart,bug4ystart,5
+endif
+if coll5=0
+sprite 6,bug5xstart,bug5ystart,6
+endif
+
+if leftkey()=1 then spiderxstart=spiderxstart-6
+cls
+if rightkey()=1 then spiderxstart=spiderxstart+6
+cls
+if upkey()=1 then spiderystart=spiderystart-6
+cls
+if downkey()=1 then spiderystart=spiderystart+6
+cls
+
+if spiderxstart<=0 then spiderxstart=0
+if spiderystart<=0 then spiderystart=0
+if spiderystart>=410 then spiderystart=410
+if spiderxstart>=580 then spiderxstart=580
+
+
+if bug1xstart<=0 then bug1xspeed=3
+if bug1ystart<=0 then bug1yspeed=7
+if bug1ystart>=440 then bug1yspeed=-2
+if bug1xstart>=620 then bug1xspeed=-5
+bug1xstart=bug1xstart+bug1xspeed
+bug1ystart=bug1ystart+bug1yspeed
+
+if bug2xstart<=0 then bug2xspeed=10
+if bug2ystart<=0 then bug2yspeed=9
+if bug2ystart>=440 then bug2yspeed=-5
+if bug2xstart>=620 then bug2xspeed=-7
+bug2xstart=bug2xstart+bug2xspeed
+bug2ystart=bug2ystart+bug2yspeed
+
+if bug3xstart<=0 then bug3xspeed=8
+if bug3ystart<=0 then bug3yspeed=1
+if bug3ystart>=440 then bug3yspeed=-5
+if bug3xstart>=620 then bug3xspeed=-1
+bug3xstart=bug3xstart+bug3xspeed
+bug3ystart=bug3ystart+bug3yspeed
+
+if bug4xstart<=0 then bug4xspeed=2
+if bug4ystart<=0 then bug4yspeed=4
+if bug4ystart>=440 then bug4yspeed=-5
+if bug4xstart>=620 then bug4xspeed=-8
+bug4xstart=bug4xstart+bug4xspeed
+bug4ystart=bug4ystart+bug4yspeed
+
+if bug5xstart<=0 then bug5xspeed=5
+if bug5ystart<=0 then bug5yspeed=11
+if bug5ystart>=440 then bug5yspeed=-5
+if bug5xstart>=620 then bug5xspeed=-9
+bug5xstart=bug5xstart+bug5xspeed
+bug5ystart=bug5ystart+bug5yspeed
+
+if sprite collision(1,2)=1 then delete sprite 2 : coll1=1
+if sprite collision(1,3)=1 then delete sprite 3 : coll2=1
+if sprite collision(1,4)=1 then delete sprite 4 : coll3=1
+if sprite collision(1,5)=1 then delete sprite 5 : coll4=1
+if sprite collision(1,6)=1 then delete sprite 6 : coll5=1
+cls
+until coll1=1 & coll2=1 & coll3=1 & coll4=1 & coll5=1
+print "You ate all the bugs"
+suspend for key
